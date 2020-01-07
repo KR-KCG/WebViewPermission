@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        openWebView.setOnClickListener { WebViewFragment.with(this@MainActivity).open() }
+        openWebView.setOnClickListener { WebViewFragment.with(this@MainActivity).setUrl("https://www.google.com").open() }
     }
 
     override fun onBackPressed() {
