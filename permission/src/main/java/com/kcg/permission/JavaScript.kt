@@ -39,16 +39,23 @@ class JavaScript(private val activity: AppCompatActivity, private val webView: W
     fun optionalPermission(permission: Array<String>) = Handler().post { PermissionHelper.optionalPermission(permission) }
 
     @JavascriptInterface
+    fun checkOptionalPermission(): Boolean = PermissionHelper.checkOptionalPermission(activity)
+
+    @JavascriptInterface
     fun clearOptionalPermission() = Handler().post { PermissionHelper.clearOptionalPermission() }
 
     @JavascriptInterface
     fun requiredPermission(permission: Array<String>) = Handler().post { PermissionHelper.requiredPermission(permission) }
 
     @JavascriptInterface
+    fun checkRequiredPermission(): Boolean = PermissionHelper.checkRequiredPermission(activity)
+
+    @JavascriptInterface
     fun clearRequiredPermission() = Handler().post { PermissionHelper.clearRequiredPermission() }
 
     @JavascriptInterface
     fun checkPermission(permission: String): Boolean = PermissionHelper.checkPermission(activity, permission)
+
 
     @JavascriptInterface
     fun requestPermissions() = Handler().post { PermissionHelper.requestPermissions(activity) }

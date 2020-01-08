@@ -22,9 +22,19 @@ object PermissionHelper {
 
     fun optionalPermission(permission: Array<String>) = optionalPermissionList.addAll(permission)
     fun clearOptionalPermission() = optionalPermissionList.clear()
+    fun checkOptionalPermission(context: Context): Boolean {
+        var success = true
+        optionalPermissionList.forEach { if (!checkPermission(context, it)) success = false }
+        return success
+    }
 
     fun requiredPermission(permission: Array<String>) = requiredPermissionList.addAll(permission)
     fun clearRequiredPermission() = requiredPermissionList.clear()
+    fun checkRequiredPermission(context: Context): Boolean {
+        var success = true
+        requiredPermissionList.forEach { if (!checkPermission(context, it)) success = false }
+        return success
+    }
 
     fun checkPermission(context: Context, permission: String): Boolean = ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
 
