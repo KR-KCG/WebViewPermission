@@ -151,4 +151,18 @@ class WebViewFragment(private val activity: AppCompatActivity) : Fragment() {
         webView.loadUrl(url)
     }
 
+    override fun onPause() {
+        super.onPause()
+        webView.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        webView.onResume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        webView.destroy()
+    }
 }
