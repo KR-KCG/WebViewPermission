@@ -55,6 +55,14 @@ class WebViewFragment(private val activity: AppCompatActivity) : Fragment() {
             INSTANCE!!.close()
             INSTANCE!!.isStop = true
         }
+
+        fun onBackPress(): Boolean {
+            INSTANCE ?: return false
+
+            INSTANCE!!.webView.loadUrl("javascript:onBackPressForAndroid();")
+
+            return INSTANCE!!.isOpen && INSTANCE!!.isLockBackPress
+        }
     }
 
     private lateinit var webView: WebView
@@ -103,11 +111,6 @@ class WebViewFragment(private val activity: AppCompatActivity) : Fragment() {
         isOpen = false
     }
 
-    fun onBackPress(): Boolean {
-        webView.loadUrl("javascript:onBackPressForAndroid();")
-        return isOpen && isLockBackPress
-    }
-
     internal fun setLockBackPress(boolean: Boolean): WebViewFragment {
         isLockBackPress = boolean
         return this
@@ -126,17 +129,10 @@ class WebViewFragment(private val activity: AppCompatActivity) : Fragment() {
         webView.loadUrl("javascript:requestPermissionsResultForAndroid('$obj');")
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.webview, container, false)
         view.setOnTouchListener { _, _ -> true }
-
-        return view
-    }
-
-    @SuppressLint("SetJavaScriptEnabled")
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        retainInstance = true
 
         webView = view!!.findViewById(R.id.webView)
 
@@ -149,6 +145,13 @@ class WebViewFragment(private val activity: AppCompatActivity) : Fragment() {
         Utils.reSizingView(activity, webView, widthRatio, heightRatio)
 
         webView.loadUrl(url)
+
+        return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        retainInstance = true
     }
 
     override fun onPause() {

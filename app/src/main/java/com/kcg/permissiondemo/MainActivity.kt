@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (WebViewFragment.with(this@MainActivity).onBackPress()) return
+        if (WebViewFragment.onBackPress()) return
 
         super.onBackPressed()
     }
